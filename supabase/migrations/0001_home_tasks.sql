@@ -111,14 +111,15 @@ alter table household_members enable row level security;
 alter table tasks enable row level security;
 alter table task_completion_events enable row level security;
 
--- household_members: users can see and manage their own membership row.
+-- household_members: users can see their own membership row.
 create policy "members_select_own"
   on household_members for select
   using (user_id = auth.uid());
 
-create policy "members_insert_own"
-  on household_members for insert
-  with check (user_id = auth.uid());
+-- No client-side self-join policy for H2.
+-- H3 will define the controlled household bootstrap/onboarding path.
+-- For v1 shared-login setup, create the household membership deliberately
+-- through a trusted setup script, SQL editor, or server-only action.
 
 -- households: members can read their household.
 create policy "households_select_member"

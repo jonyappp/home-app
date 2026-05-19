@@ -48,6 +48,21 @@ Use this for single-file fixes, copy edits, or isolated docs updates:
 - Update `architecture.md` when implementation structure becomes real.
 - Update contract files when persistence, API, or auth contracts are introduced or changed.
 
+## Documentation consistency gate
+
+`tasks/project_stage.md` is the source of truth for the current project stage.
+
+`docs/project_context.md` may summarise the current stage, but it must match `tasks/project_stage.md`.
+
+Before completing any task that updates roadmap, stage, architecture, persistence, auth, deployment, or milestone status, verify:
+- `tasks/project_stage.md` current stage matches `docs/project_context.md`
+- `tasks/todo.md` active milestone matches `docs/project_context.md`
+- exactly one milestone is marked `ACTIVE`
+- newly activated files are reflected in `tasks/project_stage.md`
+- `docs/project_context.md` canonical references match the active files
+
+If these files disagree, stop and reconcile them in the same change before proceeding.
+
 ## Product stance
 - Home App is a private household web app for Jon and CY.
 - v1 uses one shared household login.

@@ -45,7 +45,9 @@ Manual (dev server):
 
 - Pure function tests for `deriveDueState` covering: overdue, due_soon, scheduled, no_due_date
 - Edge cases: completed_for_date matching due_date, recurring task next date, date boundary at today
-- Test framework to be confirmed in H2B (likely Vitest — lightweight, TS-native)
+- Add tests for monthly/yearly recurrence edge cases, including month-end dates.
+- Decide and implement month-end recurrence behaviour, for example 31 Jan -> 28/29 Feb rather than JS Date rollover into March.
+- Test framework to be confirmed in H2B (likely Vitest - lightweight, TS-native)
 
 ---
 

@@ -27,7 +27,8 @@ export async function createClient() {
             );
           } catch {
             // setAll is called from Server Components where cookies are read-only.
-            // Safe to ignore — middleware will handle session refresh.
+            // H3 will add the session refresh strategy when auth is implemented.
+            // In H2A this client is scaffold-only and should not be treated as complete auth enforcement.
           }
         },
       },

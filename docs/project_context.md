@@ -16,9 +16,9 @@ Home App helps Jon and CY manage recurring household tasks and personal recipes 
 
 ## Current stage
 
-Current stage: **MVP** (H2A has introduced persistence, auth direction, and shared deployment direction).
+Current stage: **Core**.
 
-H1 is complete. H2 is active. H2A is done. H2B is next.
+H1 is complete. H2 is active. H2A has introduced the Next.js + Supabase foundation, but the repo remains Core until a working persisted Home Tasks flow is implemented. H2B/H2C may trigger MVP once shared persistence is exercised by real app behaviour.
 
 ## Recently decided
 

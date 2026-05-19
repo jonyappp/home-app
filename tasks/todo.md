@@ -39,6 +39,8 @@ Feature concept:
 Slices:
 - [x] H2A: Architecture decision and Next.js + Supabase bootstrap
 - [ ] H2B: Home Tasks schema and due-state domain logic
+- [ ] Add tests for monthly/yearly recurrence edge cases, including month-end dates.
+- [ ] Decide and implement month-end recurrence behaviour, for example 31 Jan -> 28/29 Feb rather than JS Date rollover into March.
 - [ ] H2C: Home Tasks list UI with loading/empty/error/populated states
 - [ ] H2D: Add task and mark done flows
 - [ ] H2E: Cross-phone persistence verification and H2 cleanup

@@ -58,6 +58,8 @@ export function addDays(isoDate: string, days: number): string {
 
 /** Add a given number of months to an ISO date string and return the result. */
 export function addMonths(isoDate: string, months: number): string {
+  // H2B must replace or validate this with explicit month-end recurrence rules.
+  // Native Date rollover can produce surprising results for month-end dates.
   const { year, month, day } = parseIsoDate(isoDate);
   const result = new Date(Date.UTC(year, month - 1 + months, day));
   return result.toISOString().slice(0, 10);
