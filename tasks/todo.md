@@ -36,6 +36,13 @@ Feature concept:
 - Persist data in a shared source of truth.
 - Confirm data can sync across both phones through the chosen deployment/persistence model.
 
+Slices:
+- [x] H2A: Architecture decision and Next.js + Supabase bootstrap
+- [ ] H2B: Home Tasks schema and due-state domain logic
+- [ ] H2C: Home Tasks list UI with loading/empty/error/populated states
+- [ ] H2D: Add task and mark done flows
+- [ ] H2E: Cross-phone persistence verification and H2 cleanup
+
 Acceptance criteria:
 - User can see overdue, due soon, scheduled, and no-date tasks.
 - User can add a recurring task from mobile.

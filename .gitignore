@@ -32,6 +32,7 @@ build/
 .next/
 .vite/
 coverage/
+tsconfig.tsbuildinfo
 
 # Databases and local data
 *.sqlite
