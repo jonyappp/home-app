@@ -80,10 +80,21 @@ Use this for single-file fixes, copy edits, or isolated docs updates:
 - Avoid inline typography in production markup. Use CSS classes or tokens.
 
 ## Build and verification commands
-- If commands are unknown, inspect the repo and infer them from existing config.
-- After commands are confirmed, document them here.
-- For every implementation change, run the strongest relevant available check.
-- For UI changes, perform or document a smoke test covering:
+
+Confirmed after H2A bootstrap (Next.js 16, Tailwind v4, Supabase):
+
+```bash
+npm install          # install dependencies
+npm run dev          # start dev server at http://localhost:3000
+npm run build        # production build + TypeScript check
+npm run start        # serve the production build (run build first)
+npm run lint         # ESLint
+npm run typecheck    # tsc --noEmit
+```
+
+For every implementation change, run the strongest relevant available check:
+- Code changes: `npm run build` (includes TypeScript) + `npm run lint`
+- UI changes: also perform or document a smoke test covering:
   - affected screen or route
   - 375px mobile viewport
   - desktop sanity check

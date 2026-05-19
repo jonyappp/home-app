@@ -1,147 +1,123 @@
 # Data Model Contract
 
-Status: Conditionally active. Becomes active when H2 introduces persistence.
+Status: Active. H2A has introduced the initial schema.
 
 ## Source-of-truth stance
 
 Home App must sync across both phones. Browser-only local storage is not an acceptable source of truth.
 
 Allowed:
-- server database
-- managed backend database
-- local cache backed by shared persistence
+- Supabase Postgres (server database, hosted)
+- local cache backed by Supabase
 
 Not allowed as source of truth:
 - browser-only localStorage
 - hard-coded JSON
 - in-memory-only state
 
-## Core entities planned for H2
+---
 
-### Household
+## H2 schema
 
-Represents the shared household workspace.
+See `supabase/migrations/0001_home_tasks.sql` for authoritative DDL.
 
-Fields to consider:
-- `id`
-- `name`
-- `created_at`
-- `updated_at`
+### households
 
-### Shared user/session
+| Field | Type | Notes |
+|---|---|---|
+| id | uuid PK | gen_random_uuid() |
+| name | text | not null |
+| created_at | timestamptz | default now() |
+| updated_at | timestamptz | default now(), auto-updated |
 
-v1 uses one shared household login.
+### household_members
 
-Fields depend on auth implementation, but must support:
-- login identity
-- password/session secret storage outside source control
-- session expiry
+| Field | Type | Notes |
+|---|---|---|
+| household_id | uuid FK | references households |
+| user_id | uuid | Supabase Auth user id |
+| created_at | timestamptz | |
+| PK | household_id + user_id | composite |
 
-### Home task
+### tasks
 
-Represents the task definition.
+| Field | Type | Notes |
+|---|---|---|
+| id | uuid PK | |
+| household_id | uuid FK | references households |
+| title | text | not null, not empty (trimmed) |
+| notes | text | nullable |
+| task_type | text | 'recurring' or 'one_off' |
+| due_date | date | date-only; nullable for one-off tasks with no date |
+| recurrence_frequency | text | 'none', 'daily', 'weekly', 'monthly', 'quarterly', 'yearly' |
+| recurrence_interval | int | default 1, must be positive |
+| is_archived | boolean | default false |
+| created_at | timestamptz | |
+| updated_at | timestamptz | auto-updated |
 
-Fields to consider:
-- `id`
-- `household_id`
-- `title`
-- `notes`
-- `task_type`: recurring or one_off
-- `due_date`
-- `recurrence_rule_id`
-- `is_archived`
-- `created_at`
-- `updated_at`
+Constraints:
+- recurring tasks must have `due_date not null` and `recurrence_frequency != 'none'`
+- `recurrence_interval` must be positive
+- `title` (trimmed) must not be empty
 
-### Recurrence rule
+**Design note:** Recurrence fields are embedded on `tasks` for H2. A separate `recurrence_rules` table was considered and rejected — the current rules are simple and the join complexity is not justified yet. Revisit if custom recurrence patterns are needed beyond the six frequency options.
 
-Represents how a recurring task repeats.
+### task_completion_events
 
-Fields to consider:
-- `id`
-- `frequency`: daily, weekly, monthly, quarterly, yearly, custom
-- `interval`
-- `anchor_date`
-- `end_date`
-- `created_at`
-- `updated_at`
+| Field | Type | Notes |
+|---|---|---|
+| id | uuid PK | |
+| task_id | uuid FK | references tasks |
+| completed_for_date | date | the due date this completion covers |
+| completed_at | timestamptz | when the user marked it done |
+| notes | text | nullable |
+| created_at | timestamptz | |
+| UNIQUE | task_id + completed_for_date | one completion per task per date |
 
-### Task completion event
-
-Represents actual completion history.
-
-Fields to consider:
-- `id`
-- `task_id`
-- `completed_at`
-- `completed_for_date`
-- `notes`
-- `created_at`
+---
 
 ## Derived values
 
-These must be derived, not treated as primary truth:
-- next due date
-- overdue status
-- due soon status
-- scheduled status
-- completion streaks if ever added
+These must be derived, never stored as database truth:
 
-Derived status should reconcile with:
-- task definition
-- recurrence rule
-- completion history
-- current date
+| Value | How derived |
+|---|---|
+| next due date | task.due_date + recurrence + completion history |
+| overdue | effective_due_date < today |
+| due_soon | effective_due_date within 7 days |
+| scheduled | effective_due_date > 7 days away |
+| no_due_date | task has no due_date |
 
-## Recipe entities planned for H4
+See `src/lib/tasks/due-state.ts` for the derivation logic.
+See `src/lib/date/household-date.ts` for date utilities.
+
+---
+
+## Recipe entities (planned H4)
 
 ### Recipe
 
 Fields to consider:
-- `id`
-- `household_id`
-- `name`
-- `status`: tried or want_to_try
-- `base_pax`
-- `prep_time_label`
-- `notes`
-- `rating`
-- `created_at`
-- `updated_at`
+- `id`, `household_id`, `name`, `status` (tried/want_to_try), `base_pax`, `prep_time_label`, `notes`, `rating`, `created_at`, `updated_at`
 
 ### Recipe ingredient
 
 Fields to consider:
-- `id`
-- `recipe_id`
-- `name`
-- `quantity`
-- `unit`
-- `sort_order`
+- `id`, `recipe_id`, `name`, `quantity`, `unit`, `sort_order`
 
 ### Recipe tag
 
-Use controlled tags where practical.
-
 Fields to consider:
-- `id`
-- `name`
-- `type`: cuisine, protein, meal, time, custom
+- `id`, `name`, `type` (cuisine/protein/meal/time/custom)
 
 ### Recipe image
 
 Fields to consider:
-- `id`
-- `recipe_id`
-- `image_type`: dish_photo or recipe_card
-- `storage_path`
-- `created_at`
+- `id`, `recipe_id`, `image_type` (dish_photo/recipe_card), `storage_path`, `created_at`
 
-## Recipe derived values
+Scaled ingredient quantities derive from `base_pax` and selected pax — stored quantities are not overwritten.
 
-- scaled ingredient quantities derive from base pax and selected pax
-- tried/want-to-try status is stored truth
-- filters derive from tags and status
+---
 
 ## Data trust rules
 
@@ -149,4 +125,4 @@ Fields to consider:
 - Do not silently drop failed writes.
 - Mutations should be auditable enough for debugging.
 - Destructive actions require confirmation.
-- Backup/export must be added before the app becomes relied upon.
+- Backup/export must be added before the app becomes relied upon (H6).

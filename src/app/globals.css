@@ -1,0 +1,89 @@
+@import "tailwindcss";
+
+/*
+  Home App design tokens.
+  Source of truth: design/product_ui_system.md
+  Tailwind v4 uses @theme to define custom tokens as CSS variables.
+*/
+@theme inline {
+  /* Surfaces */
+  --color-page-bg: #F0EDE8;
+  --color-card: #FAF8F5;
+  --color-elevated: #EAE7E1;
+
+  /* Text */
+  --color-text-primary: #1C1917;
+  --color-text-secondary: #78716C;
+  --color-text-tertiary: #A8A29E;
+
+  /* Actions */
+  --color-action-primary: #1C1917;
+  --color-action-link: #2563EB;
+
+  /* Status */
+  --color-status-positive: #16A34A;
+  --color-status-warning: #D97706;
+  --color-status-danger: #DC2626;
+
+  /* Spacing base: 4px — use Tailwind's default scale (1 unit = 4px) */
+
+  /* Border radius */
+  --radius-card: 14px;
+  --radius-input: 10px;
+
+  /* Typography */
+  --font-sans: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background-color: var(--color-page-bg);
+  color: var(--color-text-primary);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Semantic type roles — avoid inline typography in markup */
+.type-screen-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+  color: var(--color-text-primary);
+}
+
+.type-section-label {
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--color-text-secondary);
+}
+
+.type-card-title {
+  font-size: 0.9375rem;
+  font-weight: 500;
+  line-height: 1.35;
+  color: var(--color-text-primary);
+}
+
+.type-body {
+  font-size: 0.875rem;
+  line-height: 1.5;
+  color: var(--color-text-primary);
+}
+
+.type-meta {
+  font-size: 0.8125rem;
+  color: var(--color-text-secondary);
+}
+
+.type-badge {
+  font-size: 0.75rem;
+  font-weight: 500;
+}

@@ -6,7 +6,7 @@ Active milestone: **H2 - Home Tasks foundation**.
 
 Home App is a private household app for Jon and CY. v1 uses one shared household login, syncs across both phones, starts with Home Tasks, and adds Recipes soon after.
 
-Immediate next step: answer the H2 architecture questions, record the decisions, then build the smallest shared Home Tasks slice.
+Immediate next step: **H2B — Home Tasks schema and due-state domain logic.** H2A bootstrap is complete. H2B will validate the due-state derivation logic with tests and connect a real Supabase project (or local dev setup).
 
 Stop reading here unless you need constraints or canonical references.
 
@@ -16,13 +16,19 @@ Home App helps Jon and CY manage recurring household tasks and personal recipes 
 
 ## Current stage
 
-Current stage: **Core**.
+Current stage: **MVP** (H2A has introduced persistence, auth direction, and shared deployment direction).
 
-H1 is complete. H2 is starting. The repo remains Core until implementation decisions are made. H2 is expected to trigger the MVP stage once persistence, auth, and shared deployment are introduced.
+H1 is complete. H2 is active. H2A is done. H2B is next.
 
 ## Recently decided
 
-- One shared household login is enough for v1.
+- Architecture: Next.js 16 App Router + Supabase Postgres + Supabase Auth.
+- Styling: Tailwind CSS v4 with design tokens from `design/product_ui_system.md`.
+- Deployment direction: Vercel + Supabase hosted.
+- Recurrence embedded on `tasks` table (no separate `recurrence_rules` table for H2).
+- Auth implementation deferred to H3. RLS skeleton is in the migration.
+- Data access: Server Components for reads, Server Actions for writes.
+- One shared household login for v1.
 - Data must sync across both phones.
 - Home Tasks is the first implementation slice.
 - Recipes should follow soon after Home Tasks.
@@ -36,6 +42,7 @@ H1 is complete. H2 is starting. The repo remains Core until implementation decis
 - Recurring task status must be derived from recurrence and completion history.
 - The v0 HTML prototype is a design reference, not production-ready code.
 - Do not implement Recipes before the Home Tasks data model and workflow are reliable.
+- H3 auth must be in place before real household data is exposed in production.
 
 ## Canonical references
 
@@ -48,6 +55,8 @@ H1 is complete. H2 is starting. The repo remains Core until implementation decis
 | UI system | `design/product_ui_system.md` |
 | Product UI spec | `design/ui_spec.md` |
 | Durable decisions | `decisions/decision_log.md` |
-| Architecture, once implementation exists | `architecture.md` |
-| Data model, once persistence begins | `contracts/data_model.md` |
-| Auth model, once auth begins | `contracts/auth_model.md` |
+| Architecture | `architecture.md` |
+| Data model | `contracts/data_model.md` |
+| Auth model | `contracts/auth_model.md` |
+| API contracts | `contracts/api_contracts.md` |
+| Test plan | `tasks/test_plan.md` |

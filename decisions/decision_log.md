@@ -54,6 +54,35 @@ Accepted
 
 ---
 
+## 2026-05-19 - H2A architecture: Next.js + Supabase
+
+Decision:
+Use Next.js 16 App Router (TypeScript), Tailwind CSS v4, and Supabase (Postgres + Auth) for Home App v1.
+
+Reasoning:
+- Next.js App Router gives clean separation between server and client code, enabling secure server-side Supabase access and a good mobile web/PWA base.
+- Supabase Postgres provides a hosted, shared source of truth — satisfying the cross-phone sync requirement.
+- Supabase Auth with one shared account is the simplest path for v1's shared household login.
+- Tailwind v4 with the CSS `@theme` block is the cleanest way to apply design tokens consistently.
+- Vercel + Supabase hosted is the deployment direction: no infrastructure to manage.
+
+Key sub-decisions:
+- Recurrence fields are embedded on the `tasks` table (no separate `recurrence_rules` table). Simpler for H2; can be extracted if complexity grows.
+- Due state (`overdue`, `due_soon`, `scheduled`, `no_due_date`) is always derived, never stored.
+- Server Actions for writes; Server Component reads via Supabase server client. No Route Handlers in H2.
+- Auth implementation is deferred to H3. RLS skeleton is in place.
+- Date-only values for due dates; timezone passed explicitly to avoid server clock assumptions.
+
+Alternatives considered:
+- Firebase/Firestore: rejected — real-time sync is not required in H2, Postgres is better suited to the relational task/recurrence model.
+- PlanetScale / Turso: rejected — less integrated auth and storage; Supabase covers all three.
+- Separate recurrence table: rejected for H2 — added join complexity not justified until recurrence rules become more complex.
+
+Status:
+Accepted
+
+---
+
 ## 2026-05-20 - Home Tasks before Recipes
 
 Decision:

@@ -1,6 +1,6 @@
 # Test Plan
 
-Status: Conditionally active. Becomes active when implementation begins.
+Status: Active. H2A has introduced the initial implementation stack.
 
 ## Testing stance
 
@@ -10,7 +10,46 @@ Do not claim behaviour works without:
 - automated checks, or
 - a documented manual smoke test when automation is unavailable
 
-## H2 Home Tasks verification
+## Build and check commands
+
+```bash
+npm install          # install dependencies
+npm run build        # Next.js production build + TypeScript check
+npm run lint         # ESLint
+npm run typecheck    # tsc --noEmit (standalone type check)
+npm run dev          # start dev server for manual smoke tests
+```
+
+---
+
+## H2A verification (bootstrap)
+
+Automated (run in CI or locally):
+- [x] `npm install` — clean install, no errors
+- [x] `npm run build` — compiles successfully, zero TypeScript errors
+- [x] `npm run lint` — zero errors (one warning resolved)
+- [x] `npm run typecheck` — passes
+- [x] `.env.example` exists
+- [x] `.env` and `.env.*` are in `.gitignore` (only `.env.example` is excluded from ignore)
+- [x] `supabase/migrations/0001_home_tasks.sql` exists
+- [x] No secrets in committed files
+
+Manual (dev server):
+- [ ] `npm run dev` starts without error — check localhost in browser (cannot run in this session)
+- [ ] Placeholder Home page renders at 375px with correct design tokens — cannot verify without browser tooling in this session
+- [ ] No console errors on page load
+
+---
+
+## H2B verification (due-state domain logic)
+
+- Pure function tests for `deriveDueState` covering: overdue, due_soon, scheduled, no_due_date
+- Edge cases: completed_for_date matching due_date, recurring task next date, date boundary at today
+- Test framework to be confirmed in H2B (likely Vitest — lightweight, TS-native)
+
+---
+
+## H2 Home Tasks verification (H2C–H2E)
 
 Required smoke checks:
 - open Home screen
@@ -29,6 +68,8 @@ Data trust checks:
 - completion creates an event
 - derived status reconciles with current date
 
+---
+
 ## H3 Auth verification
 
 Required smoke checks:
@@ -37,6 +78,8 @@ Required smoke checks:
 - failed login shows inline error
 - session survives expected mobile usage
 - logout or expired session behaves safely
+
+---
 
 ## H4 Recipes verification
 
@@ -48,6 +91,8 @@ Required smoke checks:
 - change pax and verify scaled quantities
 - refresh and verify persistence
 - verify 375px mobile layout
+
+---
 
 ## General UI checks
 
