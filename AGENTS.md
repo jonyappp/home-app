@@ -105,6 +105,7 @@ npm run build        # production build + TypeScript check
 npm run start        # serve the production build (run build first)
 npm run lint         # ESLint
 npm run typecheck    # tsc --noEmit
+npm run test         # Vitest unit tests
 ```
 
 For every implementation change, run the strongest relevant available check:

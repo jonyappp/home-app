@@ -14,6 +14,7 @@ Do not claim behaviour works without:
 
 ```bash
 npm install          # install dependencies
+npm run test         # Vitest unit tests
 npm run build        # Next.js production build + TypeScript check
 npm run lint         # ESLint
 npm run typecheck    # tsc --noEmit (standalone type check)
@@ -43,11 +44,12 @@ Manual (dev server):
 
 ## H2B verification (due-state domain logic)
 
-- Pure function tests for `deriveDueState` covering: overdue, due_soon, scheduled, no_due_date
-- Edge cases: completed_for_date matching due_date, recurring task next date, date boundary at today
-- Add tests for monthly/yearly recurrence edge cases, including month-end dates.
-- Decide and implement month-end recurrence behaviour, for example 31 Jan -> 28/29 Feb rather than JS Date rollover into March.
-- Test framework to be confirmed in H2B (likely Vitest - lightweight, TS-native)
+- [x] Added Vitest as the lightweight unit test framework (`npm run test`).
+- [x] Added pure function tests for `deriveDueState` covering: overdue, due_soon, scheduled, no_due_date.
+- [x] Added edge case tests: one-off completion matching due date, recurring weekly advance, recurring monthly advance.
+- [x] Added month-end recurrence tests: 31 Jan -> 28/29 Feb and 31 Mar -> 30 Apr.
+- [x] Added yearly leap-day recurrence tests: 29 Feb -> 28 Feb (non-leap year) and 29 Feb -> 29 Feb (leap year).
+- [x] Implemented deterministic month/year recurrence clamping in `household-date.ts` without native rollover behaviour.
 
 ---
 

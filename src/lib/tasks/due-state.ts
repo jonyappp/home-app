@@ -72,8 +72,6 @@ export function deriveDueState(
  * For one-off tasks: returns the task's due_date if not yet completed for that date.
  * For recurring tasks: advances from the last completion or original due_date
  * until the next date that has no completion event.
- *
- * TODO (H2B): validate this against real recurrence scenarios.
  */
 export function getEffectiveDueDate(
   task: Task,

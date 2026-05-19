@@ -2,7 +2,7 @@
   Date utilities for the household context.
 
   Design rule: due dates are date-only values (YYYY-MM-DD).
-  "Today" must be passed explicitly — never derived from server timezone assumptions.
+  "Today" must be passed explicitly - never derived from server timezone assumptions.
   The household is in Singapore (SGT, UTC+8), but callers supply the date.
 
   All functions operate on ISO date strings ("YYYY-MM-DD") to avoid
@@ -20,6 +20,16 @@ export function parseIsoDate(
 ): { year: number; month: number; day: number } {
   const [year, month, day] = isoDate.split("-").map(Number);
   return { year, month, day };
+}
+
+/** Return how many days are in a month. Month is 1-based (1-12). */
+export function daysInMonth(year: number, month: number): number {
+  return new Date(Date.UTC(year, month, 0)).getUTCDate();
+}
+
+/** Clamp a day-of-month value to the max valid day in the target month. */
+export function clampDayToMonth(year: number, month: number, day: number): number {
+  return Math.min(day, daysInMonth(year, month));
 }
 
 /** Compare two ISO date strings. Returns negative, zero, or positive. */
@@ -46,6 +56,7 @@ export function isWithinDays(
   const { year, month, day } = parseIsoDate(today);
   const limit = new Date(Date.UTC(year, month - 1, day + days));
   const limitStr = limit.toISOString().slice(0, 10);
+
   return compareIsoDates(isoDate, today) >= 0 && compareIsoDates(isoDate, limitStr) <= 0;
 }
 
@@ -56,18 +67,25 @@ export function addDays(isoDate: string, days: number): string {
   return result.toISOString().slice(0, 10);
 }
 
-/** Add a given number of months to an ISO date string and return the result. */
-export function addMonths(isoDate: string, months: number): string {
-  // H2B must replace or validate this with explicit month-end recurrence rules.
-  // Native Date rollover can produce surprising results for month-end dates.
+/** Add a given number of months to an ISO date string with month-end clamping. */
+export function addMonths(isoDate: string, monthsToAdd: number): string {
   const { year, month, day } = parseIsoDate(isoDate);
-  const result = new Date(Date.UTC(year, month - 1 + months, day));
-  return result.toISOString().slice(0, 10);
+  const startMonthIndex = month - 1;
+  const targetMonthIndex = startMonthIndex + monthsToAdd;
+  const targetYear = year + Math.floor(targetMonthIndex / 12);
+  const normalisedMonthIndex = ((targetMonthIndex % 12) + 12) % 12;
+  const targetMonth = normalisedMonthIndex + 1;
+  const clampedDay = clampDayToMonth(targetYear, targetMonth, day);
+
+  const safe = new Date(Date.UTC(targetYear, targetMonth - 1, clampedDay));
+  return safe.toISOString().slice(0, 10);
 }
 
-/** Add a given number of years to an ISO date string and return the result. */
-export function addYears(isoDate: string, years: number): string {
+/** Add a given number of years to an ISO date string with leap-year clamping. */
+export function addYears(isoDate: string, yearsToAdd: number): string {
   const { year, month, day } = parseIsoDate(isoDate);
-  const result = new Date(Date.UTC(year + years, month - 1, day));
-  return result.toISOString().slice(0, 10);
+  const targetYear = year + yearsToAdd;
+  const clampedDay = clampDayToMonth(targetYear, month, day);
+  const safe = new Date(Date.UTC(targetYear, month - 1, clampedDay));
+  return safe.toISOString().slice(0, 10);
 }

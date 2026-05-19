@@ -4,9 +4,9 @@
 
 Active milestone: **H2 - Home Tasks foundation**.
 
-Home App is a private household app for Jon and CY. v1 uses one shared household login, syncs across both phones, starts with Home Tasks, and adds Recipes soon after.
+Home App is a private household app for Jon and CY. v1 uses one shared household login, syncs across both phones, starts with Home Tasks, and adds Recipes after Home Tasks is reliable.
 
-Immediate next step: **H2B — Home Tasks schema and due-state domain logic.** H2A bootstrap is complete. H2B will validate the due-state derivation logic with tests and connect a real Supabase project (or local dev setup).
+Immediate next step: **H2C - Home Tasks list UI with loading/empty/error/populated states.** H2B is complete with recurrence edge-case tests and deterministic month-end and leap-year due-date logic.
 
 Stop reading here unless you need constraints or canonical references.
 
@@ -18,7 +18,7 @@ Home App helps Jon and CY manage recurring household tasks and personal recipes 
 
 Current stage: **Core**.
 
-H1 is complete. H2 is active. H2A has introduced the Next.js + Supabase foundation, but the repo remains Core until a working persisted Home Tasks flow is implemented. H2B/H2C may trigger MVP once shared persistence is exercised by real app behaviour.
+H1 is complete. H2 is active. H2A and H2B are complete. The repo remains Core until a working persisted Home Tasks flow is implemented and exercised.
 
 ## Recently decided
 
@@ -31,8 +31,8 @@ H1 is complete. H2 is active. H2A has introduced the Next.js + Supabase foundati
 - One shared household login for v1.
 - Data must sync across both phones.
 - Home Tasks is the first implementation slice.
-- Recipes should follow soon after Home Tasks.
 - Browser-only local storage is not acceptable as the source of truth.
+- Month/year recurrence uses deterministic day clamping (for example 31 Jan -> 28/29 Feb).
 
 ## Current constraints and risks
 
