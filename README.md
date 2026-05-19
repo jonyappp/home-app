@@ -1,48 +1,46 @@
-# AI App Template
+# Home App
 
-A minimal template for building apps with staged documentation and controlled expansion.
+Private household app for Jon and CY.
 
-## Workflow
+v1 goal: one shared mobile-first app for recurring home tasks and personal recipes, synced across both phones behind one shared household login.
 
-1. Define the project in `project_brief.md`.
-2. Check `tasks/project_stage.md` to see which files are active.
-3. Start with the first thin vertical slice.
-4. Track implementation in `tasks/todo.md`.
-5. Update `docs/project_context.md` as the system meaningfully evolves.
+## Current status
 
-## File Roles
+Stage: Core
 
-* `README.md` → human-facing guide for using the template.
-* `CLAUDE.md` → AI operating instructions.
-* `docs/project_context.md` → durable snapshot of the current project.
-* `tasks/todo.md` → milestone-based execution tracker.
-* `tasks/project_stage.md` → activation controller for repository files.
+Current focus:
+1. Harden repo workflow
+2. Define v1 scope
+3. Prepare Home Tasks as the first implementation slice
+4. Add Recipes soon after Home Tasks
 
-## How staging works
+## Working with AI agents
 
-* Not all files are active at once.
-* Files become relevant as the project grows.
-* Early-stage projects should avoid over-documentation.
-* Stub files stay minimal until their activation criteria are met.
+Read `AGENTS.md` first. It is the canonical workflow.
 
-## Recommended setup sequence
+Key files:
+- `project_brief.md` - product scope
+- `docs/project_context.md` - current context
+- `tasks/todo.md` - active roadmap
+- `tasks/project_stage.md` - active/inactive docs
+- `design/product_ui_system.md` - reusable UI rules
+- `design/ui_spec.md` - Home App screen-specific UI rules
 
-### 1. Define the product
+## Product stance
 
-Write `project_brief.md` with the problem, target user, outcome, scope, constraints, and success criteria.
+- One shared household login for v1
+- Sync across both phones
+- Mobile-first web/PWA
+- Home Tasks first
+- Recipes next
+- Simple, reliable, low-friction
 
-### 2. Confirm the current stage
+## Not yet in scope
 
-Read `tasks/project_stage.md` and use only the active files for that stage.
-
-### 3. Plan the first thin slice
-
-Create the first milestone in `tasks/todo.md` and keep it small enough to validate the core workflow quickly.
-
-### 4. Build and verify
-
-Implement one milestone at a time. Update active documentation only when the system meaningfully changes.
-
-### 5. Expand only when triggered
-
-Activate architecture, contracts, tests, runbooks, or integration notes only when the project has earned that complexity.
+- Separate Jon/CY accounts
+- Native app
+- Social recipe sharing
+- Complex meal planning
+- Grocery optimisation
+- AI recipe parsing
+- Push notifications

@@ -1,13 +1,32 @@
 # API Contracts
 
-## Status
+Status: Conditionally active. Becomes active when API routes are introduced.
 
-Inactive stub
+## Contract rules
 
-## Activation Criteria
+- API responses should be predictable and typed/documented.
+- Mutations must return enough data for UI to reconcile state.
+- Errors must be explicit enough for useful inline UI feedback.
+- Do not expose household data without authentication once auth exists.
 
-* When the project exposes or depends on external or internal APIs.
+## Planned Home Tasks API shape
 
-## Notes
+Exact routes depend on stack. Expected capabilities:
 
-* Keep minimal until activated.
+- list tasks
+- create task
+- update task
+- archive/delete task
+- mark task complete
+- list completion history
+
+## Planned Recipes API shape
+
+Exact routes depend on stack. Expected capabilities:
+
+- list recipes
+- create recipe
+- update recipe
+- archive/delete recipe
+- upload or reference image
+- update recipe status

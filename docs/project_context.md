@@ -1,33 +1,53 @@
 # Project Context
 
+## TL;DR
+
+Active milestone: **H1 - Repo hardening and v1 definition**.
+
+Home App is a private household app for Jon and CY. v1 uses one shared household login, syncs across both phones, starts with Home Tasks, and adds Recipes soon after.
+
+Immediate next step: complete H1 repo/documentation hardening, then start H2 Home Tasks foundation.
+
+Stop reading here unless you need constraints or canonical references.
+
 ## Product overview
 
-Template repository for defining, planning, and evolving an AI-assisted product build without over-documenting early stages.
+Home App helps Jon and CY manage recurring household tasks and personal recipes in one shared mobile-first app.
 
-## Current capabilities
+## Current stage
 
-* Supports staged repository activation through `tasks/project_stage.md`.
-* Provides core planning files for product definition, milestones, lessons, and decisions.
-* Includes optional stubs for architecture, contracts, tests, integrations, and runbooks.
-* Includes a reusable product UI system plus a project-specific UI spec.
+Current stage: **Core**.
 
-## Key decisions
+The repo is still pre-implementation. The current work is to harden the template, define source-of-truth rules, and prepare the first implementation milestone.
 
-* The repository uses staged activation so only relevant files are active at each maturity level.
-* Milestone planning is the default execution model.
-* Design guidance is split into a reusable system and a project-specific implementation layer.
+## Recently decided
 
-## Known constraints
+- One shared household login is enough for v1.
+- Data must sync across both phones.
+- Home Tasks is the first implementation slice.
+- Recipes should follow soon after Home Tasks.
+- Browser-only local storage is not acceptable as the source of truth.
 
-* This is a template repository, not a product implementation.
-* Documentation should stay minimal until triggered by real complexity.
-* Each concept should have one clear source of truth.
+## Current constraints and risks
 
-## Active integrations
+- There must be exactly one ACTIVE milestone in `tasks/todo.md`.
+- Mobile-first means 375px checks are required for UI implementation work.
+- Shared sync means persistence must be server-side or shared, not local-only.
+- Recurring task status must be derived from recurrence and completion history.
+- The v0 HTML prototype is a design reference, not production-ready code.
+- Do not implement Recipes before the Home Tasks data model and workflow are reliable.
 
-* None.
+## Canonical references
 
-## Current limitations
-
-* Core-stage defaults assume no persistence, auth, deployment, or external integrations.
-* Contracts, runbooks, and deeper architecture notes remain inactive until activation criteria are met.
+| What | Where |
+|---|---|
+| Repo workflow | `AGENTS.md` |
+| Product scope and non-goals | `project_brief.md` |
+| Active roadmap | `tasks/todo.md` |
+| Stage activation | `tasks/project_stage.md` |
+| UI system | `design/product_ui_system.md` |
+| Product UI spec | `design/ui_spec.md` |
+| Durable decisions | `decisions/decision_log.md` |
+| Architecture, once implementation exists | `architecture.md` |
+| Data model, once persistence begins | `contracts/data_model.md` |
+| Auth model, once auth begins | `contracts/auth_model.md` |
