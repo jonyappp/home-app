@@ -9,93 +9,93 @@ Core
 ### Core
 
 Goal:
-
-* Define the product clearly
-* Build first thin vertical slice
-* Avoid unnecessary abstraction
+- Define the product clearly.
+- Harden the repo workflow.
+- Convert the v0 prototype into implementation-ready product guidance.
+- Prepare the first thin vertical slice without overbuilding.
 
 Active files:
-
-* CLAUDE.md
-* README.md
-* project_brief.md
-* tasks/todo.md
-* tasks/lessons.md
-* decisions/decision_log.md
-* docs/project_context.md
+- `AGENTS.md`
+- `CLAUDE.md`
+- `README.md`
+- `project_brief.md`
+- `tasks/project_stage.md`
+- `tasks/todo.md`
+- `tasks/lessons.md`
+- `decisions/decision_log.md`
+- `docs/project_context.md`
+- `design/product_ui_system.md`
+- `design/ui_spec.md`
 
 Conditionally active:
+- `architecture.md` when implementation structure, persistence, routing, auth, or deployment is being planned.
+- `contracts/data_model.md` when persistence is introduced.
+- `contracts/auth_model.md` when shared household login is introduced.
+- `contracts/api_contracts.md` when API routes are introduced.
+- `tasks/test_plan.md` when implementation begins.
 
-* architecture.md
-* design/ui_spec.md
-
-Inactive (stub until triggered):
-
-* contracts/*
-* tasks/test_plan.md
-* tasks/assumptions.md
-* tasks/risks.md
-* runbooks/*
-* docs/integration_notes.md
+Inactive until triggered:
+- `runbooks/*`
+- `docs/integration_notes.md`
+- `docs/repo_map.md`
 
 ---
 
 ### MVP
 
 Goal:
-
-* Support real user workflows reliably
-* Introduce contracts and tests where needed
+- Support real Home Tasks and Recipe workflows reliably.
+- Introduce persistence, auth, and tests where needed.
+- Support shared sync across both phones.
 
 Always active:
-
-* All Core files
-* tasks/test_plan.md
+- All Core files
+- `architecture.md`
+- `tasks/test_plan.md`
+- `contracts/data_model.md`
+- `contracts/auth_model.md`
 
 Conditionally active:
-
-* contracts/data_model.md (if persistence exists)
-* contracts/api_contracts.md (if external APIs exist)
-* contracts/auth_model.md (if auth exists)
-* architecture.md (if more than 3 components exist)
+- `contracts/api_contracts.md` if API routes exist.
+- `runbooks/deploy.md` if deployed.
+- `runbooks/backup_restore.md` once real household data is persisted.
 
 ---
 
 ### Scale
 
 Goal:
-
-* Improve maintainability, debuggability, extensibility
+- Improve maintainability, debuggability, extensibility, and recovery.
 
 Active:
-
-* All MVP files
-* architecture.md
-* tasks/assumptions.md
-* tasks/risks.md
-* runbooks/debugging.md
-* docs/repo_map.md
+- All MVP files
+- `tasks/assumptions.md`
+- `tasks/risks.md`
+- `runbooks/debugging.md`
+- `docs/repo_map.md`
 
 Conditionally active:
-
-* runbooks/deploy.md (if deployed)
-* runbooks/rollback.md (if production risk exists)
-* docs/integration_notes.md (if integrations have quirks)
+- `runbooks/rollback.md` if production deployment risk exists.
+- `docs/integration_notes.md` if external integrations are introduced.
 
 ---
 
 ## Stage Transition Triggers
 
-Core → MVP (any 2):
+Core → MVP when any 2 are true:
+- Persistent storage introduced
+- Shared household auth introduced
+- Deployed shared backend introduced
+- Home Tasks workflow implemented
+- Recipes workflow implemented
 
-* Persistent storage introduced
-* External API integration introduced
-* Auth introduced
-* Multiple workflows exist
+MVP → Scale when any 2 are true:
+- Multiple major workflows are live
+- Production deployment is used regularly
+- Debugging complexity increases
+- Data migration or backup/restore risk becomes real
+- More than one integration or background job exists
 
-MVP → Scale (any 2):
+## Current stage note
 
-* Multiple integrations
-* Multiple major features
-* Production deployment
-* Debugging complexity increasing
+H2 Home Tasks foundation is expected to trigger MVP because it will likely introduce persistence, shared login, and cross-phone sync.
