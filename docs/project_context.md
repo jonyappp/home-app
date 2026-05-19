@@ -2,11 +2,11 @@
 
 ## TL;DR
 
-Active milestone: **H1 - Repo hardening and v1 definition**.
+Active milestone: **H2 - Home Tasks foundation**.
 
 Home App is a private household app for Jon and CY. v1 uses one shared household login, syncs across both phones, starts with Home Tasks, and adds Recipes soon after.
 
-Immediate next step: complete H1 repo/documentation hardening, then start H2 Home Tasks foundation.
+Immediate next step: answer the H2 architecture questions, record the decisions, then build the smallest shared Home Tasks slice.
 
 Stop reading here unless you need constraints or canonical references.
 
@@ -18,7 +18,7 @@ Home App helps Jon and CY manage recurring household tasks and personal recipes 
 
 Current stage: **Core**.
 
-The repo is still pre-implementation. The current work is to harden the template, define source-of-truth rules, and prepare the first implementation milestone.
+H1 is complete. H2 is starting. The repo remains Core until implementation decisions are made. H2 is expected to trigger the MVP stage once persistence, auth, and shared deployment are introduced.
 
 ## Recently decided
 

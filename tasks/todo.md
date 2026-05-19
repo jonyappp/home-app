@@ -11,49 +11,19 @@ Roadmap rules:
 
 ---
 
-## Active Milestone
+## Completed Milestones
 
-## Milestone H1 - Repo hardening and v1 definition (ACTIVE)
+## Milestone H1 - Repo hardening and v1 definition (COMPLETE)
 
 Objective: turn the generic app template into a disciplined Home App repo with clear product scope, source-of-truth rules, UI guidance, and implementation milestones.
 
-Tasks:
-- [x] Make `AGENTS.md` the canonical workflow.
-- [x] Reduce `CLAUDE.md` to a short bootstrap pointing to `AGENTS.md`.
-- [x] Replace placeholder `project_brief.md` with the Home App v1 brief.
-- [x] Update `docs/project_context.md` with active milestone, constraints, and canonical references.
-- [x] Update `tasks/project_stage.md` for Home App stage activation.
-- [x] Replace this roadmap with Home App milestones.
-- [x] Strengthen `design/product_ui_system.md` with enforceable mobile-first and interaction rules.
-- [x] Expand `design/ui_spec.md` using the v0 prototype as product reference.
-- [x] Add or update contract stubs for data model, auth model, and API contracts.
-- [x] Add or update `tasks/test_plan.md`.
-- [x] Add or update `.gitignore`.
-- [x] Record durable v1 decisions in `decisions/decision_log.md`.
-
-Exit criteria:
-- [x] Repo has one canonical workflow source.
-- [x] Product scope is clear enough for H2 implementation.
-- [x] Home Tasks is clearly first; Recipes is clearly next.
-- [x] Shared household login and cross-phone sync assumptions are documented.
-- [x] Data source-of-truth rules are explicit.
-- [x] UI spec contains enough detail to guide implementation from the v0 prototype.
-- [x] H2 can start without another broad repo-setup pass.
-
-Verification:
-- [x] Confirm exactly one ACTIVE milestone exists.
-- [x] Confirm `CLAUDE.md` does not duplicate `AGENTS.md`.
-- [x] Confirm all referenced files exist or are intentionally inactive.
-- [x] Confirm no production feature implementation was added in H1.
-
-Status:
-- Complete
+All tasks complete. Exit criteria met. No production feature code added.
 
 ---
 
-## Planned Upcoming Milestones
+## Active Milestone
 
-## Milestone H2 - Home Tasks foundation (PLANNED)
+## Milestone H2 - Home Tasks foundation (ACTIVE)
 
 Objective: build the first working shared Home Tasks slice with persistence, shared login assumptions, and due-state correctness.
 
@@ -85,7 +55,12 @@ Verification:
 - Verify refresh preserves data.
 - Document any unavailable checks.
 
+Status:
+- Active
+
 ---
+
+## Planned Upcoming Milestones
 
 ## Milestone H3 - Shared household login and deployment hardening (PLANNED)
 
